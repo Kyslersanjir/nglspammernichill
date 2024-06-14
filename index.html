@@ -127,13 +127,17 @@
     </div>
 
     <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         async function startSpamming() {
             const username = document.getElementById('username').value;
             const message = document.getElementById('message').value;
             const amount = parseInt(document.getElementById('amount').value);
             const responseDiv = document.getElementById('response');
             const logsDiv = document.getElementById('logs');
-            const deviceId = 'defaultDeviceId'; 
+            const deviceId = 'defaultDeviceId';
 
             if (username === '' || message === '' || isNaN(amount) || amount <= 0) {
                 responseDiv.className = 'error';
@@ -142,9 +146,9 @@
             }
 
             responseDiv.textContent = 'Sending messages...';
-            responseDiv.className = ''; 
+            responseDiv.className = '';
 
-            logsDiv.innerHTML = ''; 
+            logsDiv.innerHTML = '';
 
             let successCount = 0;
             let errorCount = 0;
@@ -153,18 +157,19 @@
                 try {
                     const response = await fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&deviceId=${deviceId}&amount=1`);
                     const data = await response.json();
-                    console.log('Response:', data); 
+                    console.log('Response:', data);
                     successCount++;
                 } catch (error) {
                     console.error('Error:', error);
                     errorCount++;
                 } finally {
-                    logsDiv.innerHTML += `<div>Message ${i + 1} sent successfully</div>`; // Display as success regardless of try/catch
+                    logsDiv.innerHTML += `<div>Message ${i + 1} sent successfully</div>`;
+                    await sleep(2000);  // Sleep for 2 seconds
                 }
             }
 
             responseDiv.className = 'success';
-            responseDiv.textContent = `Sent all messages successfully.`;
+            responseDiv.textContent = `Sent ${successCount} messages successfully, ${errorCount} failed.`;
         }
 
         function updateDateTime() {
