@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGL Spammer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1d72b8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #155a8a;
+        }
+        #response {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .footer .lightning {
+            color: #ffcc00;
+            font-weight: bold;
+            animation: flicker 0.2s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        #datetime {
+            margin-top: 10px;
+            font-size: 14px;
+            animation: slide 1s infinite alternate;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NGL Spammer</h1>
+        <div class="input-group">
+            <label for="username">Enter your username</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div class="input-group">
+            <label for="message">Enter your message</label>
+            <input type="text" id="message" name="message">
+        </div>
+        <div class="input-group">
+            <label for="deviceId">Enter your device ID</label>
+            <input type="text" id="deviceId" name="deviceId">
+        </div>
+        <div class="input-group">
+            <label for="amount">Enter the amount</label>
+            <input type="number" id="amount" name="amount">
+        </div>
+        <div class="button" onclick="startSpamming()">Send</div>
+        <div id="response"></div>
+        <div id="user-info"></div>
+    </div>
+    <div class="footer">
+        <div id="datetime"></div>
+        <div class="lightning">cttoo chilli mansi</div>
+    </div>
+
+    <script>
+        function startSpamming() {
+            const username = document.getElementById('username').value;
+            const message = document.getElementById('message').value;
+            const deviceId = document.getElementById('deviceId').value;
+            const amount = document.getElementById('amount').value;
+            const responseDiv = document.getElementById('response');
+
+            if (username === '' || message === '' || deviceId === '' || amount === '') {
+                responseDiv.innerHTML = 'Please fill out all fields';
+                return;
+            }
+
+            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&deviceId=${deviceId}&amount=${amount}`)
+                .then(response => response.json())
+                .then(data => {
+                    responseDiv.innerHTML = `Success: ${JSON.stringify(data)}`;
+                })
+                .catch(error => {
+                    responseDiv.innerHTML = 'Error sending messages';
+                    console.error('Error:', error);
+                });
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-US');
+            const formattedTime = now.toLocaleTimeString('en-US');
+            document.getElementById('datetime').textContent = `Current Date and Time: ${formattedDate} ${formattedTime}`;
+        }
+
+        function getUserInfo() {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const userInfoDiv = document.getElementById('user-info');
+                    userInfoDiv.innerHTML = `Your IP: ${data.ip}`;
+
+                    fetch(`https://ipapi.co/${data.ip}/json/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            userInfoDiv.innerHTML += `<br>Your Location: ${data.city}, ${data.region}, ${data.country_name}`;
+                        });
+                });
+        }
+
+        setInterval(updateDateTime, 1000);
+        window.onload = getUserInfo;
+    </script>
+</body>
+</html>
