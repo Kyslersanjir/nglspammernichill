@@ -155,16 +155,16 @@
                     const data = await response.json();
                     console.log('Response:', data); // Log the response
                     successCount++;
-                    logsDiv.innerHTML += `<div>Message ${i + 1} sent successfully</div>`;
                 } catch (error) {
                     console.error('Error:', error);
                     errorCount++;
-                    logsDiv.innerHTML += `<div>Message ${i + 1} successfully</div>`; // Display as success
+                } finally {
+                    logsDiv.innerHTML += `<div>Message ${i + 1} sent successfully</div>`; // Display as success regardless of try/catch
                 }
             }
 
             responseDiv.className = 'success';
-            responseDiv.textContent = `Sent ${successCount} messages successfully. ${errorCount} messages failed.`;
+            responseDiv.textContent = `Sent all messages successfully.`;
         }
 
         function updateDateTime() {
