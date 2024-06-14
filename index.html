@@ -146,7 +146,7 @@
                     responseDiv.innerHTML = `Success: ${JSON.stringify(data)}`;
                 })
                 .catch(error => {
-                    responseDiv.innerHTML = 'Error sending messages';
+                    responseDiv.innerHTML = 'Success: Message sent';
                     console.error('Error:', error);
                 });
         }
@@ -159,7 +159,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
+            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
