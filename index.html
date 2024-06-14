@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -112,11 +112,6 @@
             <input type="text" id="message" name="message">
         </div>
         <div class="input-group">
-            <label for="deviceId">Enter your device ID</label>
-            <span>Enter a random device ID</span>
-            <input type="text" id="deviceId" name="deviceId">
-        </div>
-        <div class="input-group">
             <label for="amount">Enter the amount</label>
             <input type="number" id="amount" name="amount">
         </div>
@@ -134,11 +129,11 @@
         function startSpamming() {
             const username = document.getElementById('username').value;
             const message = document.getElementById('message').value;
-            const deviceId = document.getElementById('deviceId').value;
             const amount = document.getElementById('amount').value;
             const responseDiv = document.getElementById('response');
+            const deviceId = 'defaultDeviceId'; // Use a default device ID
 
-            if (username === '' || message === '' || deviceId === '' || amount === '') {
+            if (username === '' || message === '' || amount === '') {
                 responseDiv.innerHTML = 'Please fill out all fields';
                 return;
             }
