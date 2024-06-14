@@ -15,6 +15,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
         .container {
             background-color: rgba(0, 0, 0, 0.7);
@@ -39,6 +40,9 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
+        }
+        .optional-text {
+            margin-bottom: 15px;
         }
         .button {
             width: 100%;
@@ -66,36 +70,32 @@
             width: 100%;
             position: fixed;
             bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .footer .lightning {
             color: #ffcc00;
             font-weight: bold;
-            animation: flicker 0.1s infinite alternate, lightning 1s infinite;
-        }
-        @keyframes flicker {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
+            animation: lightning 1.5s infinite;
         }
         @keyframes lightning {
-            0% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00; }
-            50% { text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00; }
-            100% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00; }
+            0%, 100% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ffcc00; }
+            50% { text-shadow: 0 0 15px #ffcc00, 0 0 30px #ffcc00, 0 0 45px #ffcc00; }
         }
         #datetime {
             margin-top: 10px;
             font-size: 14px;
-            animation: slide 1s infinite alternate;
-        }
-        @keyframes slide {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(5px); }
         }
         #user-info {
-            margin-top: 10px;
+            margin-top: 20px;
             font-size: 14px;
+            animation: fadeIn 2s;
+        }
+        #user-info-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -110,9 +110,8 @@
             <label for="message">Enter your message</label>
             <input type="text" id="message" name="message">
         </div>
-        <div class="input-group">
-            <label for="deviceId">Enter your device ID</label>
-            <input type="text" id="deviceId" name="deviceId">
+        <div class="optional-text">
+            Enter developer name - Churchill (optional)
         </div>
         <div class="input-group">
             <label for="amount">Enter the amount</label>
@@ -120,6 +119,7 @@
         </div>
         <div class="button" onclick="startSpamming()">Send</div>
         <div id="response"></div>
+        <div id="user-info-title">YOUR LOCATION AND IP ADDRESS</div>
         <div id="user-info"></div>
     </div>
     <div class="footer">
@@ -131,16 +131,15 @@
         function startSpamming() {
             const username = document.getElementById('username').value;
             const message = document.getElementById('message').value;
-            const deviceId = document.getElementById('deviceId').value;
             const amount = document.getElementById('amount').value;
             const responseDiv = document.getElementById('response');
 
-            if (username === '' || message === '' || deviceId === '' || amount === '') {
+            if (username === '' || message === '' || amount === '') {
                 responseDiv.innerHTML = 'Please fill out all fields';
                 return;
             }
 
-            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&deviceId=${deviceId}&amount=${amount}`)
+            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&amount=${amount}`)
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = `Success: ${JSON.stringify(data)}`;
@@ -159,7 +158,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
+            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
