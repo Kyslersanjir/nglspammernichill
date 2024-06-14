@@ -61,15 +61,28 @@
             margin-top: 20px;
             text-align: center;
             font-size: 12px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .footer .lightning {
             color: #ffcc00;
             font-weight: bold;
-            animation: flicker 0.2s infinite alternate;
+            animation: flicker 0.1s infinite alternate, lightning 1s infinite;
         }
         @keyframes flicker {
             0% { opacity: 1; }
             100% { opacity: 0.5; }
+        }
+        @keyframes lightning {
+            0% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00; }
+            50% { text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00; }
+            100% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 20px #ffcc00; }
         }
         #datetime {
             margin-top: 10px;
@@ -79,6 +92,10 @@
         @keyframes slide {
             0% { transform: translateX(0); }
             100% { transform: translateX(5px); }
+        }
+        #user-info {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -107,7 +124,7 @@
     </div>
     <div class="footer">
         <div id="datetime"></div>
-        <div class="lightning">cttoo chilli mansi</div>
+        <div class="lightning">© 2024 Churchill. All rights reserved.</div>
     </div>
 
     <script>
