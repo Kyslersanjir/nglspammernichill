@@ -15,13 +15,14 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
+            padding: 20px; 
+            box-sizing: border-box;
         }
         .container {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            width: 90%;
+            width: 100%;
             max-width: 400px;
             text-align: center;
             margin-bottom: 80px; /* Ensure space for the footer */
@@ -51,6 +52,7 @@
             border-radius: 5px;
             cursor: pointer;
             text-align: center;
+            margin-top: 20px; 
         }
         .button:hover {
             background-color: #155a8a;
@@ -89,6 +91,12 @@
             font-size: 18px;
             margin-bottom: 10px;
             color: #ffcc00;
+            animation: colorChange 3s infinite;
+        }
+        @keyframes colorChange {
+            0% { color: #ffcc00; }
+            50% { color: #ff5733; }
+            100% { color: #ffcc00; }
         }
     </style>
 </head>
@@ -105,7 +113,7 @@
         </div>
         <div class="input-group">
             <label for="developerName">Enter developer name - Churchill (optional)</label>
-            <input type="text" id="developerName" name="developerName" placeholder="Churchill">
+            <input type="text" id="developerName" name="developerName" placeholder="Chill kalang">
         </div>
         <div class="input-group">
             <label for="amount">Enter the amount</label>
@@ -153,7 +161,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
+            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
