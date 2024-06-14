@@ -15,17 +15,15 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            padding: 20px; 
-            box-sizing: border-box;
+            overflow: hidden;
         }
         .container {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            width: 100%;
+            width: 90%;
             max-width: 400px;
             text-align: center;
-            margin-bottom: 80px; /* Ensure space for the footer */
         }
         .container h1 {
             margin-bottom: 20px;
@@ -52,7 +50,6 @@
             border-radius: 5px;
             cursor: pointer;
             text-align: center;
-            margin-top: 20px; 
         }
         .button:hover {
             background-color: #155a8a;
@@ -62,6 +59,7 @@
             white-space: pre-wrap;
         }
         .footer {
+            margin-top: 20px;
             text-align: center;
             font-size: 12px;
             padding: 10px;
@@ -84,19 +82,17 @@
             font-size: 14px;
         }
         #user-info {
-            margin-top: 10px;
+            margin-top: 20px;
             font-size: 14px;
+            animation: fadeIn 2s;
         }
         #user-info-title {
             font-size: 18px;
             margin-bottom: 10px;
-            color: #ffcc00;
-            animation: colorChange 3s infinite;
         }
-        @keyframes colorChange {
-            0% { color: #ffcc00; }
-            50% { color: #ff5733; }
-            100% { color: #ffcc00; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -112,8 +108,9 @@
             <input type="text" id="message" name="message">
         </div>
         <div class="input-group">
-            <label for="developerName">Enter developer name - Churchill (optional)</label>
-            <input type="text" id="developerName" name="developerName" placeholder="Chill kalang">
+            <label for="deviceId">Enter your device ID</label>
+            <span>Enter a random device ID</span>
+            <input type="text" id="deviceId" name="deviceId">
         </div>
         <div class="input-group">
             <label for="amount">Enter the amount</label>
@@ -133,16 +130,16 @@
         function startSpamming() {
             const username = document.getElementById('username').value;
             const message = document.getElementById('message').value;
-            const developerName = document.getElementById('developerName').value || "Churchill";
+            const deviceId = document.getElementById('deviceId').value;
             const amount = document.getElementById('amount').value;
             const responseDiv = document.getElementById('response');
 
-            if (username === '' || message === '' || amount === '') {
+            if (username === '' || message === '' || deviceId === '' || amount === '') {
                 responseDiv.innerHTML = 'Please fill out all fields';
                 return;
             }
 
-            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&developerName=${developerName}&amount=${amount}`)
+            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&deviceId=${deviceId}&amount=${amount}`)
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = `Success: ${JSON.stringify(data)}`;
@@ -161,7 +158,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
+            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
