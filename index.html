@@ -24,6 +24,7 @@
             width: 90%;
             max-width: 400px;
             text-align: center;
+            margin-bottom: 80px; /* Ensure space for the footer */
         }
         .container h1 {
             margin-bottom: 20px;
@@ -59,7 +60,6 @@
             white-space: pre-wrap;
         }
         .footer {
-            margin-top: 20px;
             text-align: center;
             font-size: 12px;
             padding: 10px;
@@ -77,30 +77,18 @@
             0%, 100% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ffcc00; }
             50% { text-shadow: 0 0 15px #ffcc00, 0 0 30px #ffcc00, 0 0 45px #ffcc00; }
         }
-        @keyframes colorChange {
-            0% { color: #ffcc00; }
-            25% { color: #00ffcc; }
-            50% { color: #cc00ff; }
-            75% { color: #ff6600; }
-            100% { color: #ffcc00; }
-        }
         #datetime {
             margin-top: 10px;
             font-size: 14px;
         }
         #user-info {
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 14px;
-            animation: fadeIn 2s;
         }
         #user-info-title {
             font-size: 18px;
             margin-bottom: 10px;
-            animation: colorChange 3s infinite;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            color: #ffcc00;
         }
     </style>
 </head>
@@ -165,7 +153,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
+            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
