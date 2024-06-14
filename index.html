@@ -41,9 +41,6 @@
             border: none;
             border-radius: 5px;
         }
-        .optional-text {
-            margin-bottom: 15px;
-        }
         .button {
             width: 100%;
             padding: 10px;
@@ -80,6 +77,13 @@
             0%, 100% { text-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ffcc00; }
             50% { text-shadow: 0 0 15px #ffcc00, 0 0 30px #ffcc00, 0 0 45px #ffcc00; }
         }
+        @keyframes colorChange {
+            0% { color: #ffcc00; }
+            25% { color: #00ffcc; }
+            50% { color: #cc00ff; }
+            75% { color: #ff6600; }
+            100% { color: #ffcc00; }
+        }
         #datetime {
             margin-top: 10px;
             font-size: 14px;
@@ -92,6 +96,7 @@
         #user-info-title {
             font-size: 18px;
             margin-bottom: 10px;
+            animation: colorChange 3s infinite;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -110,8 +115,9 @@
             <label for="message">Enter your message</label>
             <input type="text" id="message" name="message">
         </div>
-        <div class="optional-text">
-            Enter developer name - Churchill (optional)
+        <div class="input-group">
+            <label for="developerName">Enter developer name - Churchill (optional)</label>
+            <input type="text" id="developerName" name="developerName" placeholder="Churchill">
         </div>
         <div class="input-group">
             <label for="amount">Enter the amount</label>
@@ -131,6 +137,7 @@
         function startSpamming() {
             const username = document.getElementById('username').value;
             const message = document.getElementById('message').value;
+            const developerName = document.getElementById('developerName').value || "Churchill";
             const amount = document.getElementById('amount').value;
             const responseDiv = document.getElementById('response');
 
@@ -139,7 +146,7 @@
                 return;
             }
 
-            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&amount=${amount}`)
+            fetch(`https://nas-api-end.onrender.com/ngl?username=${username}&message=${message}&developerName=${developerName}&amount=${amount}`)
                 .then(response => response.json())
                 .then(data => {
                     responseDiv.innerHTML = `Success: ${JSON.stringify(data)}`;
@@ -158,7 +165,7 @@
         }
 
         function getUserInfo() {
-            fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
+            fetch('https://ipinfo.io/json?token=60117f9430a2b5')
                 .then(response => response.json())
                 .then(data => {
                     const userInfoDiv = document.getElementById('user-info');
